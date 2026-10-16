@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+.next/
+.env
+.env.local
+*.local
+tailwind-classes.md
+main.js
+agent.md

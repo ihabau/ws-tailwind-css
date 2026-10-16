@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subscription Platform - Landing Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <header class="flex flex-wrap items-center justify-between gap-4 px-6 py-4 bg-slate-900 text-white shadow-md">
+    <a href="#"
+      class="text-xl font-bold tracking-tight text-white hover:text-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400 rounded">
+      Lexicon Telecom
+    </a>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+      <a href="#features"
+        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Features</a>
+      <a href="#plans"
+        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Plans</a>
+      <a href="#operators"
+        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Operators</a>
+      <a href="#contact"
+        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <span id="auth-email" class="hidden text-sm text-slate-300"></span>
+
+      <a href="#login" id="login-link"
+        class="px-4 py-2 text-sm font-semibold rounded-lg text-slate-200 border border-slate-600 hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 transition">
+        Log in
+      </a>
+      <a href="#signup" id="signup-link"
+        class="px-4 py-2 text-sm font-semibold rounded-lg bg-sky-500 text-white hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400 transition">
+        Sign up
+      </a>
+
+      <button type="button" id="logout-btn"
+        class="hidden px-4 py-2 text-sm font-semibold rounded-lg text-slate-200 border border-slate-600 hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 transition">
+        Log out
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================================================
+           1. HERO - styling later.
+           ============================================================ -->
+    <section id="hero">
+      <h1>Manage every subscription in one place</h1>
+      <p>
+        Track plans, operators and customers with a single dashboard. Set up
+        in minutes, cancel anytime.
+      </p>
+      <a href="#signup">Get started</a>
+    </section>
+
+    <!-- ============================================================
+         Cards - plans.
+         Filled by GET requests in main.js:
+           GET /api/v1/plans/active
+           GET /api/v1/plans/active?serviceType=INTERNET
+           GET /api/v1/plans/active?serviceType=MOBILE
+         The filter buttons choose which one is made.
+         ============================================================ -->
+
+    <section id="plans">
+      <h2>Active plans</h2>
+
+      <div id="plan-filters">
+        <button type="button" data-service-type="">All</button>
+        <button type="button" data-service-type="INTERNET">Internet</button>
+        <button type="button" data-service-type="MOBILE">Mobile</button>
+      </div>
+
+      <p id="plans-status">Loading plans...</p>
+      <ul id="plan-list"></ul>
+    </section>
+
+    <!-- ============================================================
+         MY SUBSCRIPTIONS - style it later.
+         GET /api/v1/subscriptions  (requires a logged-in user)
+         Returns the subscriptions that belong to the current user.
+         ============================================================ -->
+    <section id="subscriptions">
+      <h2>My subscriptions</h2>
+      <p id="subscriptions-status">Log in to see your subscriptions.</p>
+      <ul id="subscription-list"></ul>
+    </section>
+
+    <!-- Filled by GET /api/v1/operators in main.js. -->
+    <section id="operators">
+      <h2>Operators</h2>
+      <p id="operators-status">Loading operators...</p>
+      <ul id="operator-list"></ul>
+    </section>
+
+    <!-- ============================================================
+         LOGIN - style it later.
+         POST /api/v1/auth/login  { email, password }  -> { accessToken }
+         ============================================================ -->
+    <section id="login">
+      <h2>Log in</h2>
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="email" required />
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="password" required />
+
+        <button type="submit">Log in</button>
+      </form>
+      <button type="button" id="admin-fill-btn">Use admin demo account</button>
+      <p id="login-status"></p>
+      <p>No account? <a href="#signup">Sign up</a></p>
+    </section>
+
+    <!-- ============================================================
+         REGISTER - style it later.
+         POST /api/v1/auth/register  { email, firstName, lastName, password }
+         Password must be at least 8 characters (API validation).
+         ============================================================ -->
+    <section id="signup">
+      <h2>Sign up</h2>
+      <form id="register-form">
+        <label for="register-email">Email</label>
+        <input type="email" id="register-email" name="email" required />
+
+        <label for="register-first-name">First name</label>
+        <input type="text" id="register-first-name" name="firstName" required />
+
+        <label for="register-last-name">Last name</label>
+        <input type="text" id="register-last-name" name="lastName" required />
+
+        <label for="register-password">Password (min 8 characters)</label>
+        <input type="password" id="register-password" name="password" minlength="8" required />
+
+        <button type="submit">Create account</button>
+      </form>
+      <p id="register-status"></p>
+      <p>Already have an account? <a href="#login">Log in</a></p>
+    </section>
+
+    <!-- ============================================================
+         ADMIN DASHBOARD - style it later.
+         Loaded only when logged in with an ADMIN account.
+           GET /api/v1/plans      -> all plans, active and inactive (ADMIN only)
+           GET /api/v1/customers  -> all customers
+         Log in with the seeded admin: admin@example.com / password
+         ============================================================ -->
+    <section id="admin">
+      <h2>Admin dashboard</h2>
+      <p id="admin-status">Log in with an admin account to see this section.</p>
+
+      <h3>All plans</h3>
+      <ul id="admin-plan-list"></ul>
+
+      <h3>Customers</h3>
+      <p id="customers-status"></p>
+      <ul id="customer-list"></ul>
+    </section>
+
+    <section id="cta">
+      <h2>Ready to start?</h2>
+      <p>Create your account and connect your first subscription.</p>
+      <a href="#signup">Sign up free</a>
+    </section>
+  </main>
+
+  <!-- ============================================================
+         FOOTER - styling later.
+         ============================================================ -->
+  <footer id="contact">
+    <p>&copy; 2026 Subscription Platform. All rights reserved.</p>
+    <nav>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Support</a>
+    </nav>
+  </footer>
+
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./main.js"></script>
+</body>
+
+</html>
