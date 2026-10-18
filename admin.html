@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Lexicon Telecom</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<!--
+  ADMIN PAGE - static HTML + Tailwind only (no JavaScript).
+  Shows the ADMIN-only data as filler. When wired up, the live data comes from:
+    GET /api/v1/plans      (ADMIN only - includes inactive plans)
+    GET /api/v1/customers  (USER, ADMIN)
+-->
+
+<body class="bg-slate-50 text-slate-600 antialiased">
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <a href="index.html"
+        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Lexicon Telecom
+        <span class="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">Admin</span>
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+        <a href="#overview"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Overview</a>
+        <a href="#plans"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">All plans</a>
+        <a href="#customers"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+      </nav>
+
+      <a href="index.html"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section id="overview" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Admin dashboard</h1>
+      <p class="mb-10 text-slate-500">
+        Filler content - the live data is served by the admin-only endpoints.
+      </p>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p class="text-sm font-medium text-slate-500">Total plans</p>
+          <p class="mt-2 text-3xl font-extrabold text-slate-900">8</p>
+          <p class="mt-1 text-xs text-slate-400">GET /api/v1/plans</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p class="text-sm font-medium text-slate-500">Active plans</p>
+          <p class="mt-2 text-3xl font-extrabold text-slate-900">6</p>
+          <p class="mt-1 text-xs text-slate-400">2 inactive</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p class="text-sm font-medium text-slate-500">Customers</p>
+          <p class="mt-2 text-3xl font-extrabold text-slate-900">2</p>
+          <p class="mt-1 text-xs text-slate-400">GET /api/v1/customers</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p class="text-sm font-medium text-slate-500">Operators</p>
+          <p class="mt-2 text-3xl font-extrabold text-slate-900">2</p>
+          <p class="mt-1 text-xs text-slate-400">GET /api/v1/operators</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALL PLANS (ADMIN) -->
+    <section id="plans" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">All plans</h2>
+      <p class="mb-10 text-slate-500">
+        Example rows - includes inactive plans, which only admins can see.
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table class="w-full min-w-[48rem] text-left text-sm">
+          <thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+            <tr>
+              <th class="px-6 py-3 font-semibold">Id</th>
+              <th class="px-6 py-3 font-semibold">Name</th>
+              <th class="px-6 py-3 font-semibold">Price</th>
+              <th class="px-6 py-3 font-semibold">Type</th>
+              <th class="px-6 py-3 font-semibold">Data</th>
+              <th class="px-6 py-3 font-semibold">Operator</th>
+              <th class="px-6 py-3 font-semibold">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">1</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Fiber 50</td>
+              <td class="px-6 py-4 text-slate-700">199 SEK</td>
+              <td class="px-6 py-4 text-slate-700">INTERNET</td>
+              <td class="px-6 py-4 text-slate-500">50 GB</td>
+              <td class="px-6 py-4 text-slate-700">TelNet</td>
+              <td class="px-6 py-4">
+                <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
+              </td>
+            </tr>
+
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">2</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Fiber 300</td>
+              <td class="px-6 py-4 text-slate-700">499 SEK</td>
+              <td class="px-6 py-4 text-slate-700">INTERNET</td>
+              <td class="px-6 py-4 text-slate-500">300 GB</td>
+              <td class="px-6 py-4 text-slate-700">TelNet</td>
+              <td class="px-6 py-4">
+                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-500">inactive</span>
+              </td>
+            </tr>
+
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">3</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Mobile Unlimited</td>
+              <td class="px-6 py-4 text-slate-700">349 SEK</td>
+              <td class="px-6 py-4 text-slate-700">MOBILE</td>
+              <td class="px-6 py-4 text-slate-500">100 GB</td>
+              <td class="px-6 py-4 text-slate-700">MobiLink</td>
+              <td class="px-6 py-4">
+                <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
+              </td>
+            </tr>
+
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">4</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Mobile Lite</td>
+              <td class="px-6 py-4 text-slate-700">99 SEK</td>
+              <td class="px-6 py-4 text-slate-700">MOBILE</td>
+              <td class="px-6 py-4 text-slate-500">2 GB</td>
+              <td class="px-6 py-4 text-slate-700">MobiLink</td>
+              <td class="px-6 py-4">
+                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-500">inactive</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section id="customers" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Customers</h2>
+      <p class="mb-10 text-slate-500">Example rows - registered customer accounts.</p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table class="w-full min-w-[36rem] text-left text-sm">
+          <thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+            <tr>
+              <th class="px-6 py-3 font-semibold">Id</th>
+              <th class="px-6 py-3 font-semibold">First name</th>
+              <th class="px-6 py-3 font-semibold">Last name</th>
+              <th class="px-6 py-3 font-semibold">Email</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">1</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Admin</td>
+              <td class="px-6 py-4 text-slate-700">Adminson</td>
+              <td class="px-6 py-4 text-slate-500">admin@example.com</td>
+            </tr>
+
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">2</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">User</td>
+              <td class="px-6 py-4 text-slate-700">Userson</td>
+              <td class="px-6 py-4 text-slate-500">user@example.com</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div
+      class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-slate-500 sm:flex-row">
+      <p>© 2026 Lexicon Telecom AB. Admin view.</p>
+      <a href="index.html"
+        class="rounded transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -8,178 +8,579 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <header class="flex flex-wrap items-center justify-between gap-4 px-6 py-4 bg-slate-900 text-white shadow-md">
-    <a href="#"
-      class="text-xl font-bold tracking-tight text-white hover:text-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400 rounded">
-      Lexicon Telecom
-    </a>
+<!--
+  Design tokens used across every section (light theme):
+    surface   : bg-slate-50 (page) / bg-white (cards, panels)
+    border    : border-slate-200
+    accent    : indigo (text indigo-600, buttons bg-indigo-600 hover:bg-indigo-500)
+    text      : slate-900 (headings) / slate-600 (body) / slate-500 (muted)
+    container : mx-auto w-full max-w-7xl px-6
+    rhythm    : py-16 md:py-24 per section
+    card      : rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-indigo-400 hover:shadow-md
+    control   : rounded-lg
+    focus     : focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500
+-->
 
-    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-      <a href="#features"
-        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Features</a>
-      <a href="#plans"
-        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Plans</a>
-      <a href="#operators"
-        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Operators</a>
-      <a href="#contact"
-        class="hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded px-1">Contact</a>
-    </nav>
-
-    <div class="flex items-center gap-3">
-      <span id="auth-email" class="hidden text-sm text-slate-300"></span>
-
-      <a href="#login" id="login-link"
-        class="px-4 py-2 text-sm font-semibold rounded-lg text-slate-200 border border-slate-600 hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 transition">
-        Log in
-      </a>
-      <a href="#signup" id="signup-link"
-        class="px-4 py-2 text-sm font-semibold rounded-lg bg-sky-500 text-white hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400 transition">
-        Sign up
+<body class="bg-slate-50 text-slate-600 antialiased">
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <a href="#"
+        class="rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Lexicon Telecom
       </a>
 
-      <button type="button" id="logout-btn"
-        class="hidden px-4 py-2 text-sm font-semibold rounded-lg text-slate-200 border border-slate-600 hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 transition">
-        Log out
-      </button>
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+        <a href="#plans"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
+        <a href="#subscriptions"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
+        <a href="#operators"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Operators</a>
+        <a href="#contact"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Contact</a>
+        <a id="admin-link" href="admin.html"
+          class="hidden rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Admin</a>
+      </nav>
+
+      <div id="nav-auth" class="relative">
+        <button type="button" id="login-menu-btn"
+          class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Login
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div id="login-menu"
+          class="hidden absolute right-0 z-50 mt-2 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
+          <a href="#login" id="signin-link"
+            class="block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+            Sign in
+          </a>
+
+          <a href="#register" class="js-open-register block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+            Create account
+          </a>
+
+          <div class="my-2 border-t border-slate-200"></div>
+
+          <a href="/forgot-password"
+            class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-slate-100 hover:text-slate-900">
+            Forgot password?
+          </a>
+        </div>
+      </div>
+
+      <div id="nav-user" class="hidden flex items-center gap-3">
+        <span class="hidden text-sm text-slate-500 sm:inline">Signed in as</span>
+        <span id="nav-username" class="text-sm font-semibold text-slate-900"></span>
+        <button type="button" id="logout-btn"
+          class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Log out
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- ============================================================
-           1. HERO - styling later.
-           ============================================================ -->
-    <section id="hero">
-      <h1>Manage every subscription in one place</h1>
-      <p>
-        Track plans, operators and customers with a single dashboard. Set up
-        in minutes, cancel anytime.
-      </p>
-      <a href="#signup">Get started</a>
-    </section>
+  <!--
+    LOGIN PAGE - overlays the rest of the page, sitting under the navbar.
+    Hidden by default; opened from the navbar (Login button / Sign in link).
+    Submits via POST /api/v1/auth/login.
+  -->
+  <section id="login" role="dialog" aria-modal="true" aria-labelledby="login-title"
+    class="fixed inset-0 z-40 hidden overflow-y-auto bg-slate-900/50 p-4 backdrop-blur-sm">
+    <div class="mx-auto mt-24 flex w-full max-w-md flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+      <div class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h2 id="login-title" class="text-2xl font-bold tracking-tight text-slate-900">
+            Log in
+          </h2>
+          <p class="mt-1 text-sm text-slate-500">
+            Enter your details to view your data.
+          </p>
+        </div>
 
-    <!-- ============================================================
-         Cards - plans.
-         Filled by GET requests in main.js:
-           GET /api/v1/plans/active
-           GET /api/v1/plans/active?serviceType=INTERNET
-           GET /api/v1/plans/active?serviceType=MOBILE
-         The filter buttons choose which one is made.
-         ============================================================ -->
-
-    <section id="plans">
-      <h2>Active plans</h2>
-
-      <div id="plan-filters">
-        <button type="button" data-service-type="">All</button>
-        <button type="button" data-service-type="INTERNET">Internet</button>
-        <button type="button" data-service-type="MOBILE">Mobile</button>
+        <button type="button" id="login-close-btn" aria-label="Close"
+          class="-mr-2 rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
-      <p id="plans-status">Loading plans...</p>
-      <ul id="plan-list"></ul>
-    </section>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-username" class="mb-1 block text-sm font-medium text-slate-700">Username</label>
+          <input id="login-username" name="username" type="text" autocomplete="username" required
+            placeholder="admin@example.com"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
 
-    <!-- ============================================================
-         MY SUBSCRIPTIONS - style it later.
-         GET /api/v1/subscriptions  (requires a logged-in user)
-         Returns the subscriptions that belong to the current user.
-         ============================================================ -->
-    <section id="subscriptions">
-      <h2>My subscriptions</h2>
-      <p id="subscriptions-status">Log in to see your subscriptions.</p>
-      <ul id="subscription-list"></ul>
-    </section>
+        <div>
+          <label for="login-password" class="mb-1 block text-sm font-medium text-slate-700">Password</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required
+            placeholder="••••••••"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
 
-    <!-- Filled by GET /api/v1/operators in main.js. -->
-    <section id="operators">
-      <h2>Operators</h2>
-      <p id="operators-status">Loading operators...</p>
-      <ul id="operator-list"></ul>
-    </section>
-
-    <!-- ============================================================
-         LOGIN - style it later.
-         POST /api/v1/auth/login  { email, password }  -> { accessToken }
-         ============================================================ -->
-    <section id="login">
-      <h2>Log in</h2>
-      <form id="login-form">
-        <label for="login-email">Email</label>
-        <input type="email" id="login-email" name="email" required />
-
-        <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="password" required />
-
-        <button type="submit">Log in</button>
+        <button type="submit"
+          class="w-full rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Log in
+        </button>
       </form>
-      <button type="button" id="admin-fill-btn">Use admin demo account</button>
-      <p id="login-status"></p>
-      <p>No account? <a href="#signup">Sign up</a></p>
-    </section>
 
-    <!-- ============================================================
-         REGISTER - style it later.
-         POST /api/v1/auth/register  { email, firstName, lastName, password }
-         Password must be at least 8 characters (API validation).
-         ============================================================ -->
-    <section id="signup">
-      <h2>Sign up</h2>
-      <form id="register-form">
-        <label for="register-email">Email</label>
-        <input type="email" id="register-email" name="email" required />
+      <p id="login-status" class="mt-4 text-sm text-slate-500"></p>
 
-        <label for="register-first-name">First name</label>
-        <input type="text" id="register-first-name" name="firstName" required />
+      <div class="mt-4 flex items-center justify-between gap-4 border-t border-slate-200 pt-4 text-sm">
+        <button type="button" id="admin-fill-btn"
+          class="rounded text-indigo-600 transition hover:text-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Use admin demo account
+        </button>
 
-        <label for="register-last-name">Last name</label>
-        <input type="text" id="register-last-name" name="lastName" required />
+        <a href="#register"
+          class="js-open-register rounded text-slate-500 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Create account
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <label for="register-password">Password (min 8 characters)</label>
-        <input type="password" id="register-password" name="password" minlength="8" required />
+  <!--
+    REGISTER PAGE - overlays the rest of the page, sitting under the navbar.
+    Opened from the navbar dropdown / login panel.
+    Submits via POST /api/v1/auth/register.
+  -->
+  <section id="register" role="dialog" aria-modal="true" aria-labelledby="register-title"
+    class="fixed inset-0 z-40 hidden overflow-y-auto bg-slate-900/50 p-4 backdrop-blur-sm">
+    <div class="mx-auto mt-24 flex w-full max-w-md flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+      <div class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h2 id="register-title" class="text-2xl font-bold tracking-tight text-slate-900">
+            Create account
+          </h2>
+          <p class="mt-1 text-sm text-slate-500">
+            Sign up to manage your subscriptions.
+          </p>
+        </div>
 
-        <button type="submit">Create account</button>
+        <button type="button" id="register-close-btn" aria-label="Close"
+          class="-mr-2 rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="register-form" class="space-y-4">
+        <div>
+          <label for="register-email" class="mb-1 block text-sm font-medium text-slate-700">Email</label>
+          <input id="register-email" name="email" type="email" autocomplete="email" required
+            placeholder="you@example.com"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label for="register-first-name" class="mb-1 block text-sm font-medium text-slate-700">First name</label>
+            <input id="register-first-name" name="firstName" type="text" autocomplete="given-name" required
+              placeholder="Jane"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+
+          <div>
+            <label for="register-last-name" class="mb-1 block text-sm font-medium text-slate-700">Last name</label>
+            <input id="register-last-name" name="lastName" type="text" autocomplete="family-name" required
+              placeholder="Doe"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+
+        <div>
+          <label for="register-password" class="mb-1 block text-sm font-medium text-slate-700">Password</label>
+          <input id="register-password" name="password" type="password" autocomplete="new-password" required
+            minlength="8" placeholder="At least 8 characters"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <button type="submit"
+          class="w-full rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Create account
+        </button>
       </form>
-      <p id="register-status"></p>
-      <p>Already have an account? <a href="#login">Log in</a></p>
+
+      <p id="register-status" class="mt-4 text-sm text-slate-500"></p>
+
+      <div class="mt-4 border-t border-slate-200 pt-4 text-sm">
+        <a href="#login"
+          class="js-open-login rounded text-indigo-600 transition hover:text-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Already have an account? Log in
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="bg-gradient-to-br from-white via-indigo-50 to-slate-100">
+      <div class="mx-auto flex w-full max-w-7xl flex-col items-center px-6 py-24 text-center md:py-32">
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-indigo-600">
+          Find best deals here!
+        </p>
+
+        <h1 class="mb-6 text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-6xl">
+          Lexicon Telecom
+        </h1>
+
+        <p class="mb-10 max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">
+          Track plans, operators and customers with a single dashboard. Set up
+          in minutes, cancel anytime.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="#plans"
+            class="rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            See current offers
+          </a>
+
+          <a href="#contact"
+            class="rounded-lg border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Contact me
+          </a>
+        </div>
+      </div>
     </section>
 
-    <!-- ============================================================
-         ADMIN DASHBOARD - style it later.
-         Loaded only when logged in with an ADMIN account.
-           GET /api/v1/plans      -> all plans, active and inactive (ADMIN only)
-           GET /api/v1/customers  -> all customers
-         Log in with the seeded admin: admin@example.com / password
-         ============================================================ -->
-    <section id="admin">
-      <h2>Admin dashboard</h2>
-      <p id="admin-status">Log in with an admin account to see this section.</p>
+    <!--
+      PLANS - placeholders. Live data comes from:
+        GET /api/v1/plans/active
+        GET /api/v1/plans/active?serviceType=INTERNET
+        GET /api/v1/plans/active?serviceType=MOBILE
+    -->
+    <section id="plans" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+        Plans
+      </h2>
+      <p class="mb-10 text-slate-500">
+        Example cards - live plans from the API appear here.
+      </p>
 
-      <h3>All plans</h3>
-      <ul id="admin-plan-list"></ul>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <article
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example card Starter Plan will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the plan!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-3xl font-extrabold text-slate-900">
+              $9<span class="text-base font-medium text-slate-400">/month</span>
+            </p>
+            <a href="#"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              Choose plan
+            </a>
+          </div>
+        </article>
 
-      <h3>Customers</h3>
-      <p id="customers-status"></p>
-      <ul id="customer-list"></ul>
+        <article
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example card Starter Plan will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the plan!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-3xl font-extrabold text-slate-900">
+              $9<span class="text-base font-medium text-slate-400">/month</span>
+            </p>
+            <a href="#"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              Choose plan
+            </a>
+          </div>
+        </article>
+
+        <article
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example card Starter Plan will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the plan!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-3xl font-extrabold text-slate-900">
+              $9<span class="text-base font-medium text-slate-400">/month</span>
+            </p>
+            <a href="#"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              Choose plan
+            </a>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section id="cta">
-      <h2>Ready to start?</h2>
-      <p>Create your account and connect your first subscription.</p>
-      <a href="#signup">Sign up free</a>
+    <!--
+      MY SUBSCRIPTIONS - requires a logged-in user.
+        GET /api/v1/subscriptions
+    -->
+    <section id="subscriptions" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+        My subscriptions
+      </h2>
+      <p id="subscriptions-status" class="mb-10 text-slate-500">
+        Log in to see your subscriptions.
+      </p>
+
+      <ul id="subscription-list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example card Starter Plan will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the plan!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-3xl font-extrabold text-slate-900">
+              $9<span class="text-base font-medium text-slate-400">/month</span>
+            </p>
+            <a href="#"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              Edit plan
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example card Starter Plan will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the plan!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-3xl font-extrabold text-slate-900">
+              $9<span class="text-base font-medium text-slate-400">/month</span>
+            </p>
+            <a href="#"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              Edit plan
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example card Starter Plan will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the plan!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-3xl font-extrabold text-slate-900">
+              $9<span class="text-base font-medium text-slate-400">/month</span>
+            </p>
+            <a href="#"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              Edit plan
+            </a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!--
+      OPERATORS - filled by GET /api/v1/operators.
+      Same card recipe as Plans and Subscriptions.
+    -->
+    <section id="operators" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+        Operators
+      </h2>
+      <p id="operators-status" class="mb-10 text-slate-500">
+        Loading operators...
+      </p>
+
+      <ul id="operator-list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example operator will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the operator!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-sm font-medium text-slate-500">
+              Internet &amp; mobile
+            </p>
+            <a href="#plans"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              View plans
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example operator will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the operator!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-sm font-medium text-slate-500">
+              Internet &amp; mobile
+            </p>
+            <a href="#plans"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              View plans
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">
+            Example operator will get populated with javascript
+          </h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">
+            Description of the operator!
+          </p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-sm font-medium text-slate-500">
+              Internet &amp; mobile
+            </p>
+            <a href="#plans"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              View plans
+            </a>
+          </div>
+        </li>
+      </ul>
     </section>
   </main>
 
-  <!-- ============================================================
-         FOOTER - styling later.
-         ============================================================ -->
-  <footer id="contact">
-    <p>&copy; 2026 Subscription Platform. All rights reserved.</p>
-    <nav>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Support</a>
-    </nav>
+  <footer id="contact" class="border-t border-slate-200 bg-white text-slate-500">
+    <div class="mx-auto w-full max-w-7xl px-6 py-14">
+      <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <a href="/" class="mb-4 inline-block text-xl font-bold text-slate-900">Lexicon Telecom AB</a>
+          <p class="mb-6 text-sm leading-relaxed">
+            Fast fibre, mobile, and TV subscriptions for homes and businesses
+            across Sweden.
+          </p>
+          <div class="flex gap-3">
+            <a href="#" aria-label="Facebook"
+              class="rounded-lg border border-slate-200 bg-white p-2 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 22v-8h3l1-4h-4V8c0-1 .3-2 2-2h2V2h-3c-3 0-5 2-5 5v3H6v4h3v8z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram"
+              class="rounded-lg border border-slate-200 bg-white p-2 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 2c2.7 0 3 0 4.1.1 1 0 1.7.2 2.3.5.6.2 1.1.6 1.6 1 .4.5.8 1 1 1.6.3.6.4 1.3.5 2.3.1 1.1.1 1.4.1 4.5s0 3.4-.1 4.5c0 1-.2 1.7-.5 2.3-.2.6-.6 1.1-1 1.6-.5.4-1 .8-1.6 1-.6.3-1.3.4-2.3.5-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1 0-1.7-.2-2.3-.5-.6-.2-1.1-.6-1.6-1-.4-.5-.8-1-1-1.6-.3-.6-.4-1.3-.5-2.3C2 15.4 2 15.1 2 12s0-3.4.1-4.5c0-1 .2-1.7.5-2.3.2-.6.6-1.1 1-1.6.5-.4 1-.8 1.6-1 .6-.3 1.3-.4 2.3-.5C8.6 2 8.9 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.8-3.2a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn"
+              class="rounded-lg border border-slate-200 bg-white p-2 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M4.98 3.5A2.5 2.5 0 112.5 6a2.5 2.5 0 012.48-2.5zM3 8.98h4V21H3zM9 8.98h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.83 0-2.1 1.43-2.1 2.9V21H9z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-900">
+            Services
+          </h4>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Fibre broadband</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Mobile subscriptions</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">TV and streaming</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Business internet</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Router and equipment</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-900">
+            Support
+          </h4>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Help centre</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Check coverage</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Track order</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Report an outage</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Contact us</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-900">
+            Company
+          </h4>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <a href="#" class="transition hover:text-slate-900">About Lexicon Telecom</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Careers</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Press</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Privacy policy</a>
+            </li>
+            <li>
+              <a href="#" class="transition hover:text-slate-900">Terms of service</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row">
+        <p>© 2026 Lexicon Telecom AB. All rights reserved.</p>
+        <p>Made in Sweden</p>
+      </div>
+    </div>
   </footer>
 
   <script src="./node_modules/jquery/dist/jquery.js"></script>
