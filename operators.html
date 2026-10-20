@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Operators - Lexicon Telecom</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<!--
+  OPERATORS PAGE
+    GET  /api/v1/operators                    (USER, ADMIN) -> #operator-list
+    GET  /api/v1/operators/{id}               (USER, ADMIN)
+    GET  /api/v1/operators/search?name=       (USER, ADMIN) -> #operator-search-form
+    POST /api/v1/operators                    (ADMIN)       -> #operator-form
+    OperatorResponse: id, name
+    OperatorRequest : name
+-->
+
+<body class="bg-slate-50 text-slate-600 antialiased">
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <a href="index.html"
+        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Lexicon Telecom
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+        <a href="plans.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
+        <a href="operators.html"
+          class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Operators</a>
+        <a href="subscriptions.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
+        <a href="customers.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+      </nav>
+
+      <a href="index.html"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ALL OPERATORS -->
+    <section id="all-operators" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Operators</h1>
+      <p class="mb-10 text-slate-500">Example cards - live data is wired in operators.js.</p>
+
+      <div class="mb-6 flex flex-wrap items-end gap-4">
+        <form id="operator-search-form" class="flex items-end gap-3">
+          <div>
+            <label for="operator-search-name" class="mb-1 block text-sm font-medium text-slate-700">Search by name</label>
+            <input id="operator-search-name" name="name" type="text" placeholder="TelNet"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <button type="submit"
+            class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Search
+          </button>
+        </form>
+      </div>
+
+      <p id="operators-status" class="mb-6 text-sm text-slate-500"></p>
+
+      <ul id="operator-list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">TelNet</h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">Example operator - internet &amp; mobile.</p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-sm font-medium text-slate-500">Operator #1</p>
+            <a href="plans.html"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              View plans
+            </a>
+          </div>
+        </li>
+
+        <li
+          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
+          <h3 class="mb-2 text-xl font-bold text-slate-900">MobiLink</h3>
+          <p class="mb-6 text-sm leading-relaxed text-slate-500">Example operator - internet &amp; mobile.</p>
+          <div class="mt-auto flex items-end justify-between">
+            <p class="text-sm font-medium text-slate-500">Operator #2</p>
+            <a href="plans.html"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+              View plans
+            </a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ADMIN: CREATE OPERATOR -->
+    <section id="operator-create" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Create operator</h2>
+      <p class="mb-10 text-slate-500">POST /operators (admin only).</p>
+
+      <form id="operator-form"
+        class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="min-w-[16rem] flex-1">
+          <label for="operator-name" class="mb-1 block text-sm font-medium text-slate-700">Name</label>
+          <input id="operator-name" name="name" type="text" required placeholder="New operator"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <button type="submit"
+          class="rounded-lg bg-indigo-600 px-6 py-2 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Create operator
+        </button>
+      </form>
+
+      <p id="operator-form-status" class="mt-4 text-sm text-slate-500"></p>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div
+      class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-slate-500 sm:flex-row">
+      <p>© 2026 Lexicon Telecom AB.</p>
+      <a href="index.html"
+        class="rounded transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </footer>
+
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./guard.js"></script>
+  <script src="./operators.js"></script>
+</body>
+
+</html>

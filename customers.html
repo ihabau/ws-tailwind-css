@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customers - Lexicon Telecom</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<!--
+  CUSTOMERS PAGE
+    GET /api/v1/customers                 (USER, ADMIN) -> #customer-list
+    GET /api/v1/customers/{id}            (USER, ADMIN) -> #customer-by-id-form
+    GET /api/v1/customers/email/{email}   (USER, ADMIN) -> #customer-by-email-form
+    PUT /api/v1/customers/{id}/profile    (USER, ADMIN) -> #profile-form
+    CustomerResponse: id, email, firstName, lastName
+    CustomerDetailRequest: address, phoneNumber, preferences
+-->
+
+<body class="bg-slate-50 text-slate-600 antialiased">
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <a href="index.html"
+        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Lexicon Telecom
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+        <a href="plans.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
+        <a href="operators.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Operators</a>
+        <a href="subscriptions.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
+        <a href="customers.html"
+          class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+      </nav>
+
+      <a href="index.html"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ALL CUSTOMERS -->
+    <section id="all-customers" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Customers</h1>
+      <p class="mb-10 text-slate-500">Example rows - live data is wired in customers.js.</p>
+
+      <p id="customers-status" class="mb-6 text-sm text-slate-500"></p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table class="w-full min-w-[36rem] text-left text-sm">
+          <thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+            <tr>
+              <th class="px-6 py-3 font-semibold">Id</th>
+              <th class="px-6 py-3 font-semibold">First name</th>
+              <th class="px-6 py-3 font-semibold">Last name</th>
+              <th class="px-6 py-3 font-semibold">Email</th>
+            </tr>
+          </thead>
+          <tbody id="customer-list" class="divide-y divide-slate-100">
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">1</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Admin</td>
+              <td class="px-6 py-4 text-slate-700">Adminson</td>
+              <td class="px-6 py-4 text-slate-500">admin@example.com</td>
+            </tr>
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">2</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">User</td>
+              <td class="px-6 py-4 text-slate-700">Userson</td>
+              <td class="px-6 py-4 text-slate-500">user@example.com</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LOOKUPS: BY ID / BY EMAIL -->
+    <section id="customer-lookups" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Find a customer</h2>
+      <p class="mb-10 text-slate-500">GET /customers/{id} and GET /customers/email/{email}.</p>
+
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <form id="customer-by-id-form"
+          class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="min-w-[12rem] flex-1">
+            <label for="customer-id" class="mb-1 block text-sm font-medium text-slate-700">Customer id</label>
+            <input id="customer-id" name="id" type="number" min="1" required placeholder="2"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <button type="submit"
+            class="rounded-lg border border-slate-300 bg-white px-6 py-2 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Find by id
+          </button>
+          <p id="customer-by-id-status" class="w-full text-sm text-slate-500"></p>
+        </form>
+
+        <form id="customer-by-email-form"
+          class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="min-w-[12rem] flex-1">
+            <label for="customer-email-search" class="mb-1 block text-sm font-medium text-slate-700">Email</label>
+            <input id="customer-email-search" name="email" type="email" required placeholder="user@example.com"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <button type="submit"
+            class="rounded-lg border border-slate-300 bg-white px-6 py-2 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Find by email
+          </button>
+          <p id="customer-by-email-status" class="w-full text-sm text-slate-500"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- UPDATE PROFILE -->
+    <section id="customer-profile" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Update profile</h2>
+      <p class="mb-10 text-slate-500">PUT /customers/{id}/profile with address, phone number and preferences.</p>
+
+      <form id="profile-form"
+        class="grid grid-cols-1 gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <label for="profile-customer-id" class="mb-1 block text-sm font-medium text-slate-700">Customer id</label>
+          <input id="profile-customer-id" name="id" type="number" min="1" required placeholder="2"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <div>
+          <label for="profile-address" class="mb-1 block text-sm font-medium text-slate-700">Address</label>
+          <input id="profile-address" name="address" type="text" placeholder="Main Street 1"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <div>
+          <label for="profile-phone" class="mb-1 block text-sm font-medium text-slate-700">Phone number</label>
+          <input id="profile-phone" name="phoneNumber" type="text" placeholder="070-1234567"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <div class="sm:col-span-2 lg:col-span-3">
+          <label for="profile-preferences" class="mb-1 block text-sm font-medium text-slate-700">Preferences</label>
+          <input id="profile-preferences" name="preferences" type="text" placeholder="Paperless billing"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+
+        <div>
+          <button type="submit"
+            class="rounded-lg bg-indigo-600 px-6 py-2 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Save profile
+          </button>
+        </div>
+      </form>
+
+      <p id="profile-status" class="mt-4 text-sm text-slate-500"></p>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div
+      class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-slate-500 sm:flex-row">
+      <p>© 2026 Lexicon Telecom AB.</p>
+      <a href="index.html"
+        class="rounded transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </footer>
+
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./guard.js"></script>
+  <script src="./customers.js"></script>
+</body>
+
+</html>

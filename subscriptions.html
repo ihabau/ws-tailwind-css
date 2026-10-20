@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subscriptions - Lexicon Telecom</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<!--
+  SUBSCRIPTIONS PAGE (ROLE_USER)
+    GET  /api/v1/subscriptions              -> #subscription-list
+    POST /api/v1/subscriptions              { planId }        -> #subscribe-form
+    PUT  /api/v1/subscriptions/{id}         { planId }        -> #change-plan-form
+    POST /api/v1/subscriptions/{id}/cancel                    -> #subscription-list rows (Cancel)
+    SubscriptionResponse: id, cancelledAt, createdAt, updatedAt, serviceType,
+                          planId, planName, price, operatorId, operatorName
+    SubscriptionRequest : planId
+-->
+
+<body class="bg-slate-50 text-slate-600 antialiased">
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+    <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <a href="index.html"
+        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Lexicon Telecom
+      </a>
+
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+        <a href="plans.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
+        <a href="operators.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Operators</a>
+        <a href="subscriptions.html"
+          class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
+        <a href="customers.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+      </nav>
+
+      <a href="index.html"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- MY SUBSCRIPTIONS -->
+    <section id="my-subscriptions" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Subscriptions</h1>
+      <p class="mb-10 text-slate-500">Example rows - live data and actions are wired in subscriptions.js.</p>
+
+      <p id="subscriptions-status" class="mb-6 text-sm text-slate-500"></p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <table class="w-full min-w-[56rem] text-left text-sm">
+          <thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+            <tr>
+              <th class="px-6 py-3 font-semibold">Id</th>
+              <th class="px-6 py-3 font-semibold">Plan</th>
+              <th class="px-6 py-3 font-semibold">Price</th>
+              <th class="px-6 py-3 font-semibold">Operator</th>
+              <th class="px-6 py-3 font-semibold">Service type</th>
+              <th class="px-6 py-3 font-semibold">Created</th>
+              <th class="px-6 py-3 font-semibold">Cancelled</th>
+              <th class="px-6 py-3 font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="subscription-list" class="divide-y divide-slate-100">
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">1</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Fiber 100</td>
+              <td class="px-6 py-4 text-slate-700">299</td>
+              <td class="px-6 py-4 text-slate-700">TelNet</td>
+              <td class="px-6 py-4 text-slate-700">INTERNET</td>
+              <td class="px-6 py-4 text-slate-500">2026-03-01</td>
+              <td class="px-6 py-4 text-slate-400">-</td>
+              <td class="px-6 py-4">
+                <button type="button" data-subscription-id="1"
+                  class="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                  Change plan
+                </button>
+                <button type="button" data-subscription-id="1"
+                  class="rounded-lg border border-red-200 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 text-slate-400">2</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">Mobile Lite</td>
+              <td class="px-6 py-4 text-slate-700">99</td>
+              <td class="px-6 py-4 text-slate-700">MobiLink</td>
+              <td class="px-6 py-4 text-slate-700">MOBILE</td>
+              <td class="px-6 py-4 text-slate-500">2026-02-11</td>
+              <td class="px-6 py-4 text-slate-500">2026-03-14</td>
+              <td class="px-6 py-4 text-slate-400">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SUBSCRIBE / CHANGE PLAN -->
+    <section id="subscription-forms" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Subscribe or change plan</h2>
+      <p class="mb-10 text-slate-500">POST /subscriptions to subscribe, PUT /subscriptions/{id} to change plan.</p>
+
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <form id="subscribe-form"
+          class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="min-w-[12rem] flex-1">
+            <label for="subscribe-plan-id" class="mb-1 block text-sm font-medium text-slate-700">Plan id</label>
+            <input id="subscribe-plan-id" name="planId" type="number" min="1" required placeholder="3"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <button type="submit"
+            class="rounded-lg bg-indigo-600 px-6 py-2 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Subscribe
+          </button>
+          <p id="subscribe-status" class="w-full text-sm text-slate-500"></p>
+        </form>
+
+        <form id="change-plan-form"
+          class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="min-w-[10rem] flex-1">
+            <label for="change-subscription-id" class="mb-1 block text-sm font-medium text-slate-700">Subscription id</label>
+            <input id="change-subscription-id" name="id" type="number" min="1" required placeholder="1"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div class="min-w-[10rem] flex-1">
+            <label for="change-plan-id" class="mb-1 block text-sm font-medium text-slate-700">New plan id</label>
+            <input id="change-plan-id" name="planId" type="number" min="1" required placeholder="5"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <button type="submit"
+            class="rounded-lg border border-slate-300 bg-white px-6 py-2 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Change plan
+          </button>
+          <p id="change-plan-status" class="w-full text-sm text-slate-500"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div
+      class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs text-slate-500 sm:flex-row">
+      <p>© 2026 Lexicon Telecom AB.</p>
+      <a href="index.html"
+        class="rounded transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        Back to site
+      </a>
+    </div>
+  </footer>
+
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./guard.js"></script>
+  <script src="./subscriptions.js"></script>
+</body>
+
+</html>
