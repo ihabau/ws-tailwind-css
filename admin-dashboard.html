@@ -30,13 +30,15 @@
   <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
     <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
       <a href="index.html"
-        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        class="rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
         Lexicon Telecom
-        <span class="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">Admin</span>
+        <span data-nav-role
+          class="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">Admin</span>
       </a>
 
-      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
-        <a href="admin-dashboard.html"
+      <nav id="mobile-menu"
+        class="hidden flex-col items-start gap-4 text-sm font-medium text-slate-600 md:flex md:flex-row md:items-center md:gap-6 sm:absolute sm:top-16 sm:right-0 sm:w-56 sm:rounded-2xl sm:border sm:border-slate-200 sm:bg-white sm:p-2 sm:shadow-xl">
+        <a data-nav-dashboard href="admin-dashboard.html"
           class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Dashboard</a>
         <a href="plans.html"
           class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
@@ -46,12 +48,16 @@
           class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
         <a href="customers.html"
           class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+        <a href="index.html"
+          class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:ml-4">
+          Back to site
+        </a>
       </nav>
 
-      <a href="index.html"
-        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-        Back to site
-      </a>
+      <button id="menu-button"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden">
+        MENU
+      </button>
     </div>
   </header>
 
@@ -61,32 +67,38 @@
       <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
         Admin dashboard
       </h1>
-      <p class="mb-10 text-slate-500">
-        Example numbers - the live data is served by the admin-only endpoints.
-      </p>
+      <p class="mb-10 text-slate-500">Your current plan and operator.</p>
 
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <p class="text-sm font-medium text-slate-500">Total plans</p>
-          <p id="plans-count" class="mt-2 text-3xl font-extrabold text-slate-900">8</p>
+          <p id="plans-count" class="mt-2 text-3xl font-extrabold text-slate-900">
+            8
+          </p>
           <p class="mt-1 text-xs text-slate-400">GET /api/v1/plans</p>
         </div>
 
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <p class="text-sm font-medium text-slate-500">Active plans</p>
-          <p id="active-plans-count" class="mt-2 text-3xl font-extrabold text-slate-900">6</p>
+          <p id="active-plans-count" class="mt-2 text-3xl font-extrabold text-slate-900">
+            6
+          </p>
           <p class="mt-1 text-xs text-slate-400">2 inactive</p>
         </div>
 
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <p class="text-sm font-medium text-slate-500">Customers</p>
-          <p id="customers-count" class="mt-2 text-3xl font-extrabold text-slate-900">2</p>
+          <p id="customers-count" class="mt-2 text-3xl font-extrabold text-slate-900">
+            2
+          </p>
           <p class="mt-1 text-xs text-slate-400">GET /api/v1/customers</p>
         </div>
 
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <p class="text-sm font-medium text-slate-500">Operators</p>
-          <p id="operators-count" class="mt-2 text-3xl font-extrabold text-slate-900">2</p>
+          <p id="operators-count" class="mt-2 text-3xl font-extrabold text-slate-900">
+            2
+          </p>
           <p class="mt-1 text-xs text-slate-400">GET /api/v1/operators</p>
         </div>
       </div>
@@ -123,12 +135,15 @@
               <td class="px-6 py-4 text-slate-500">50 GB</td>
               <td class="px-6 py-4 text-slate-700">TelNet</td>
               <td class="px-6 py-4">
-                <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
+                <span
+                  class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
               </td>
             </tr>
             <tr class="transition hover:bg-slate-50">
               <td class="px-6 py-4 text-slate-400">2</td>
-              <td class="px-6 py-4 font-semibold text-slate-900">Fiber 300</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">
+                Fiber 300
+              </td>
               <td class="px-6 py-4 text-slate-700">499 SEK</td>
               <td class="px-6 py-4 text-slate-700">INTERNET</td>
               <td class="px-6 py-4 text-slate-500">300 GB</td>
@@ -139,13 +154,16 @@
             </tr>
             <tr class="transition hover:bg-slate-50">
               <td class="px-6 py-4 text-slate-400">3</td>
-              <td class="px-6 py-4 font-semibold text-slate-900">Mobile Unlimited</td>
+              <td class="px-6 py-4 font-semibold text-slate-900">
+                Mobile Unlimited
+              </td>
               <td class="px-6 py-4 text-slate-700">349 SEK</td>
               <td class="px-6 py-4 text-slate-700">MOBILE</td>
               <td class="px-6 py-4 text-slate-500">100 GB</td>
               <td class="px-6 py-4 text-slate-700">MobiLink</td>
               <td class="px-6 py-4">
-                <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
+                <span
+                  class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
               </td>
             </tr>
           </tbody>
@@ -204,8 +222,8 @@
 
   <script src="./node_modules/jquery/dist/jquery.js"></script>
   <script src="./node_modules/axios/dist/axios.min.js"></script>
-  <script src="./guard.js"></script>
-  <script src="./admin.js"></script>
+  <script src="./scripts/guard.js"></script>
+  <script src="./scripts/admin-dashboard.js"></script>
 </body>
 
 </html>

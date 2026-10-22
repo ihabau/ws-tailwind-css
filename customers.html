@@ -22,11 +22,16 @@
   <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
     <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
       <a href="index.html"
-        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        class="rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
         Lexicon Telecom
+        <span data-nav-role
+          class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">User</span>
       </a>
 
-      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+      <nav id="mobile-menu"
+        class="hidden flex-col items-start gap-4 text-sm font-medium text-slate-600 md:flex md:flex-row md:items-center md:gap-6 sm:absolute sm:top-16 sm:right-0 sm:w-56 sm:rounded-2xl sm:border sm:border-slate-200 sm:bg-white sm:p-2 sm:shadow-xl">
+        <a data-nav-dashboard href="user-dashboard.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Dashboard</a>
         <a href="plans.html"
           class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
         <a href="operators.html"
@@ -35,20 +40,56 @@
           class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
         <a href="customers.html"
           class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+        <a href="index.html"
+          class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:ml-4">
+          Back to site
+        </a>
       </nav>
 
-      <a href="index.html"
-        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-        Back to site
-      </a>
+      <button id="menu-button"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden">
+        MENU
+      </button>
     </div>
   </header>
 
   <main>
-    <!-- ALL CUSTOMERS -->
+    <!-- CUSTOMERS -->
     <section id="all-customers" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
-      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Customers</h1>
-      <p class="mb-10 text-slate-500">Example rows - live data is wired in customers.js.</p>
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+        Customers
+      </h1>
+      <p class="mb-10 text-slate-500">Show all customers.</p>
+
+      <div class="mb-6 flex items-center justify-between gap-4">
+        <button id="load-customers-btn"
+          class="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Load!
+        </button>
+
+        <form class="flex items-center gap-2" id="customer-search-form">
+          <input id="search-type" name="searchType" type="text" required placeholder="Search..."
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          <button id="customer-search-btn"
+            class="rounded-lg border border-slate-300 bg-white px-6 py-2 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+            Search
+          </button>
+          <select id="customer-value-type" name="valueType"
+            class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="" disabled class="text-slate-400">All</option>
+            <option value="id">Id</option>
+            <option value="email" disabled class="text-slate-400">
+              Email
+            </option>
+            <option value="firstName" disabled class="text-slate-400">
+              First name
+            </option>
+            <option value="lastName" disabled class="text-slate-400">
+              Last name
+            </option>
+          </select>
+        </form>
+      </div>
 
       <p id="customers-status" class="mb-6 text-sm text-slate-500"></p>
 
@@ -62,70 +103,26 @@
               <th class="px-6 py-3 font-semibold">Email</th>
             </tr>
           </thead>
-          <tbody id="customer-list" class="divide-y divide-slate-100">
-            <tr class="transition hover:bg-slate-50">
-              <td class="px-6 py-4 text-slate-400">1</td>
-              <td class="px-6 py-4 font-semibold text-slate-900">Admin</td>
-              <td class="px-6 py-4 text-slate-700">Adminson</td>
-              <td class="px-6 py-4 text-slate-500">admin@example.com</td>
-            </tr>
-            <tr class="transition hover:bg-slate-50">
-              <td class="px-6 py-4 text-slate-400">2</td>
-              <td class="px-6 py-4 font-semibold text-slate-900">User</td>
-              <td class="px-6 py-4 text-slate-700">Userson</td>
-              <td class="px-6 py-4 text-slate-500">user@example.com</td>
-            </tr>
-          </tbody>
+          <tbody id="customer-list" class="divide-y divide-slate-100"></tbody>
         </table>
-      </div>
-    </section>
-
-    <!-- LOOKUPS: BY ID / BY EMAIL -->
-    <section id="customer-lookups" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
-      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Find a customer</h2>
-      <p class="mb-10 text-slate-500">GET /customers/{id} and GET /customers/email/{email}.</p>
-
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <form id="customer-by-id-form"
-          class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div class="min-w-[12rem] flex-1">
-            <label for="customer-id" class="mb-1 block text-sm font-medium text-slate-700">Customer id</label>
-            <input id="customer-id" name="id" type="number" min="1" required placeholder="2"
-              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-          </div>
-          <button type="submit"
-            class="rounded-lg border border-slate-300 bg-white px-6 py-2 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-            Find by id
-          </button>
-          <p id="customer-by-id-status" class="w-full text-sm text-slate-500"></p>
-        </form>
-
-        <form id="customer-by-email-form"
-          class="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div class="min-w-[12rem] flex-1">
-            <label for="customer-email-search" class="mb-1 block text-sm font-medium text-slate-700">Email</label>
-            <input id="customer-email-search" name="email" type="email" required placeholder="user@example.com"
-              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-          </div>
-          <button type="submit"
-            class="rounded-lg border border-slate-300 bg-white px-6 py-2 font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-            Find by email
-          </button>
-          <p id="customer-by-email-status" class="w-full text-sm text-slate-500"></p>
-        </form>
       </div>
     </section>
 
     <!-- UPDATE PROFILE -->
     <section id="customer-profile" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
-      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Update profile</h2>
-      <p class="mb-10 text-slate-500">PUT /customers/{id}/profile with address, phone number and preferences.</p>
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+        Update profile
+      </h2>
+      <p class="mb-10 text-slate-500">
+        PUT /customers/{id}/profile with address, phone number and
+        preferences.
+      </p>
 
       <form id="profile-form"
         class="grid grid-cols-1 gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <label for="profile-customer-id" class="mb-1 block text-sm font-medium text-slate-700">Customer id</label>
-          <input id="profile-customer-id" name="id" type="number" min="1" required placeholder="2"
+          <input id="profile-customer-id" name="id" required placeholder="2"
             class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
         </div>
 
@@ -172,8 +169,8 @@
 
   <script src="./node_modules/jquery/dist/jquery.js"></script>
   <script src="./node_modules/axios/dist/axios.min.js"></script>
-  <script src="./guard.js"></script>
-  <script src="./customers.js"></script>
+  <script src="./scripts/guard.js"></script>
+  <script src="./scripts/customers.js"></script>
 </body>
 
 </html>
