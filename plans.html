@@ -25,33 +25,62 @@
   <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
     <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
       <a href="index.html"
-        class="flex items-center gap-2 rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+        class="rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
         Lexicon Telecom
+        <span data-nav-role
+          class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">User</span>
       </a>
 
-      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+      <nav id="mobile-menu"
+        class="hidden flex-col items-start gap-4 text-sm font-medium text-slate-600 md:flex md:flex-row md:items-center md:gap-6 sm:absolute sm:top-16 sm:right-0 sm:w-56 sm:rounded-2xl sm:border sm:border-slate-200 sm:bg-white sm:p-2 sm:shadow-xl">
+        <a href="index.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Home
+        </a>
+
+        <a data-nav-dashboard href="user-dashboard.html"
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Dashboard
+        </a>
+
         <a href="plans.html"
-          class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
+          class="rounded px-1 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Plans
+        </a>
+
         <a href="operators.html"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Operators</a>
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Operators
+        </a>
+
         <a href="subscriptions.html"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Subscriptions
+        </a>
+
         <a href="customers.html"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Customers</a>
+          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
+          Customers
+        </a>
       </nav>
 
-      <a href="index.html"
-        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-        Back to site
-      </a>
+      <button id="menu-button"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden">
+        MENU
+      </button>
     </div>
   </header>
 
   <main>
     <!-- ACTIVE PLANS -->
     <section id="active-plans" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
-      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Plans</h1>
-      <p class="mb-10 text-slate-500">Example cards - filter buttons call GET /plans/active with a serviceType.</p>
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+        Plans
+      </h1>
+      <p class="mb-10 text-slate-500">
+        Example cards - filter buttons call GET /plans/active with a
+        serviceType.
+      </p>
 
       <div id="plan-filters" class="mb-6 flex flex-wrap gap-3">
         <button type="button" data-service-type=""
@@ -70,49 +99,17 @@
 
       <p id="plans-status" class="mb-6 text-sm text-slate-500"></p>
 
-      <div id="plan-list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <article
-          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
-          <h3 class="mb-2 text-xl font-bold text-slate-900">Fiber 50</h3>
-          <p class="mb-6 text-sm leading-relaxed text-slate-500">INTERNET - 50 GB - TelNet</p>
-          <div class="mt-auto flex items-end justify-between">
-            <p class="text-3xl font-extrabold text-slate-900">
-              199<span class="text-base font-medium text-slate-400"> SEK/month</span>
-            </p>
-            <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
-          </div>
-        </article>
-
-        <article
-          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
-          <h3 class="mb-2 text-xl font-bold text-slate-900">Mobile Unlimited</h3>
-          <p class="mb-6 text-sm leading-relaxed text-slate-500">MOBILE - 100 GB - MobiLink</p>
-          <div class="mt-auto flex items-end justify-between">
-            <p class="text-3xl font-extrabold text-slate-900">
-              349<span class="text-base font-medium text-slate-400"> SEK/month</span>
-            </p>
-            <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">active</span>
-          </div>
-        </article>
-
-        <article
-          class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-indigo-400 hover:shadow-md">
-          <h3 class="mb-2 text-xl font-bold text-slate-900">Fiber 300</h3>
-          <p class="mb-6 text-sm leading-relaxed text-slate-500">INTERNET - 300 GB - TelNet</p>
-          <div class="mt-auto flex items-end justify-between">
-            <p class="text-3xl font-extrabold text-slate-900">
-              499<span class="text-base font-medium text-slate-400"> SEK/month</span>
-            </p>
-            <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-500">inactive</span>
-          </div>
-        </article>
-      </div>
+      <div id="plan-list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
     </section>
 
     <!-- ADMIN: ALL PLANS -->
     <section id="all-plans" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
-      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">All plans (admin)</h2>
-      <p class="mb-10 text-slate-500">GET /plans returns every plan, including inactive ones.</p>
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+        All plans (admin)
+      </h2>
+      <p class="mb-10 text-slate-500">
+        GET /plans returns every plan, including inactive ones.
+      </p>
 
       <p id="admin-plan-status" class="mb-6 text-sm text-slate-500"></p>
 
@@ -131,27 +128,7 @@
             </tr>
           </thead>
           <tbody id="admin-plan-list" class="divide-y divide-slate-100">
-            <tr class="transition hover:bg-slate-50">
-              <td class="px-6 py-4 text-slate-400">2</td>
-              <td class="px-6 py-4 font-semibold text-slate-900">Fiber 300</td>
-              <td class="px-6 py-4 text-slate-700">499</td>
-              <td class="px-6 py-4 text-slate-700">INTERNET</td>
-              <td class="px-6 py-4 text-slate-500">300</td>
-              <td class="px-6 py-4 text-slate-700">TelNet</td>
-              <td class="px-6 py-4">
-                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-500">false</span>
-              </td>
-              <td class="px-6 py-4">
-                <button type="button" data-plan-id="2"
-                  class="rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-                  Edit
-                </button>
-                <button type="button" data-plan-id="2"
-                  class="rounded-lg border border-red-200 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-                  Delete
-                </button>
-              </td>
-            </tr>
+            <-- ADMIN: ALL PLANS -->
           </tbody>
         </table>
       </div>
@@ -159,8 +136,12 @@
 
     <!-- ADMIN: CREATE / UPDATE PLAN -->
     <section id="plan-edit" class="mx-auto w-full max-w-7xl px-6 py-16 md:py-24">
-      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Create or update a plan</h2>
-      <p class="mb-10 text-slate-500">POST /plans to create, PUT /plans/{id} to update (admin only).</p>
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+        Create or update a plan
+      </h2>
+      <p class="mb-10 text-slate-500">
+        POST /plans to create, PUT /plans/{id} to update (admin only).
+      </p>
 
       <form id="plan-form"
         class="grid grid-cols-1 gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:grid-cols-2 lg:grid-cols-3">
@@ -234,8 +215,8 @@
 
   <script src="./node_modules/jquery/dist/jquery.js"></script>
   <script src="./node_modules/axios/dist/axios.min.js"></script>
-  <script src="./guard.js"></script>
-  <script src="./plans.js"></script>
+  <script src="./scripts/guard.js"></script>
+  <script src="./scripts/plans.js"></script>
 </body>
 
 </html>
