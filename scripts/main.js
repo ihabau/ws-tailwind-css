@@ -17,7 +17,6 @@ const menu = document.getElementById("login-menu");
 const navAuth = document.getElementById("nav-auth");
 const navUser = document.getElementById("nav-user");
 const navUsername = document.getElementById("nav-username");
-const navRole = document.getElementById("nav-role");
 const dashboardLink = document.getElementById("dashboard-link");
 
 const getToken = () => localStorage.getItem(TOKEN_KEY);
@@ -68,30 +67,28 @@ function updateAuthUi() {
   const payload = getSession();
   const loggedIn = Boolean(payload);
 
-  if (loggedIn) {
-    const admin = isAdmin();
-    navUsername.textContent = payload.sub || "";
-    navRole.textContent = admin ? "Admin" : "User";
-    navRole.classList.toggle("bg-indigo-100", admin);
-    navRole.classList.toggle("text-indigo-700", admin);
-    navRole.classList.toggle("bg-slate-100", !admin);
-    navRole.classList.toggle("text-slate-600", !admin);
-    navAuth.classList.add("hidden");
-    navUser.classList.remove("hidden");
-  } else {
-    navUsername.textContent = "";
-    navRole.textContent = "";
-    navAuth.classList.remove("hidden");
-    navUser.classList.add("hidden");
-  }
+  document.querySelectorAll("[data-nav-username]").forEach((el) => {
+    el.textContent = loggedIn ? payload.sub || "" : "";
+  });
+
+  document.querySelectorAll("[data-nav-login]").forEach((el) => {
+    el.classList.toggle("hidden", loggedIn);
+  });
+
+  document.querySelectorAll("[data-nav-user]").forEach((el) => {
+    el.classList.toggle("hidden", !loggedIn);
+  });
+
+  navUsername.textContent = loggedIn ? payload.sub || "" : "";
+  navAuth.classList.toggle("lg:hidden", loggedIn);
+  navAuth.classList.toggle("lg:block", !loggedIn);
+  navUser.classList.toggle("lg:hidden", !loggedIn);
+  navUser.classList.toggle("lg:flex", loggedIn);
 
   dashboardLink.classList.toggle("hidden", !loggedIn);
   if (loggedIn) {
     dashboardLink.href = isAdmin() ? "admin-dashboard.html" : "user-dashboard.html";
   }
-
-  const navLoginLink = document.querySelector("[data-nav-login]");
-  if (navLoginLink) navLoginLink.classList.toggle("hidden", loggedIn);
 }
 
 const openMenu = () => menu.classList.remove("hidden");
@@ -187,6 +184,13 @@ document.addEventListener("keydown", (event) => {
 document.getElementById("logout-btn").addEventListener("click", () => {
   clearToken();
   updateAuthUi();
+});
+
+document.querySelectorAll("[data-nav-logout]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    clearToken();
+    updateAuthUi();
+  });
 });
 
 document.getElementById("admin-fill-btn").addEventListener("click", () => {

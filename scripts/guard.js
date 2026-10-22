@@ -86,6 +86,29 @@ function wireStaticNav() {
 
   document.querySelectorAll("[data-nav-dashboard]").forEach((el) => {
     el.href = admin ? "admin-dashboard.html" : "user-dashboard.html";
+    el.classList.remove("hidden");
+  });
+
+  document.querySelectorAll("[data-nav-login]").forEach((el) => {
+    el.classList.add("hidden");
+  });
+
+  document.querySelectorAll("[data-nav-user]").forEach((el) => {
+    el.classList.remove("hidden");
+  });
+
+  document.querySelectorAll("[data-nav-logout]").forEach((el) => {
+    el.addEventListener("click", () => {
+      localStorage.removeItem(GUARD_TOKEN_KEY);
+      window.location.replace("index.html");
+    });
+  });
+
+  document.querySelectorAll("[data-nav-logout-desktop]").forEach((el) => {
+    el.addEventListener("click", () => {
+      localStorage.removeItem(GUARD_TOKEN_KEY);
+      window.location.replace("index.html");
+    });
   });
 
   const menuButton = document.getElementById("menu-button");

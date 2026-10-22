@@ -4,7 +4,7 @@
 
 This workshop's landing page is for last week's project **lexicon-ws-subscription-platform** (the Spring API in `school/lexicon/java/workshops/lexicon-ws-subscription-platform`).
 
-The **navbar is already styled with Tailwind** and serves as your worked example. Every other section is plain, unstyled HTML - your job is to add Tailwind utility classes to them. `main.js` contains the API calls: **GET** for data (Plans, Operators) and **POST** for auth (Log in / Sign up).
+The **navbar is already styled with Tailwind** and serves as your worked example. Every other section is plain, unstyled HTML - your job is to add Tailwind utility classes to them. The navbar lives in a single shared component (`scripts/navbar.js`) that renders the header into every page, so you only style it once. `scripts/main.js` (landing page) and `scripts/guard.js` (sub-pages) contain the API calls: **GET** for data (Plans, Operators) and **POST** for auth (Log in / Sign up), plus the role-aware auth UI.
 
 ## Setup
 
@@ -18,6 +18,16 @@ npm run dev   # serves the folder at http://localhost:3000
 The API runs separately on `http://localhost:8080` - start it later (`mvn spring-boot:run` in `subscription-api/`). CORS already allows `localhost:3000`. Until the API is up (or when it returns 401 - most GET endpoints need a JWT), the Plans/Operators sections show a status message instead of data.
 
 > The CDN is for learning/prototyping only. For production you would install Tailwind via the CLI, Vite or PostCSS so unused CSS gets purged.
+
+## Project structure
+
+- `index.html` - landing page (hero, features, plans, operators, contact) + login/register overlays
+- `plans.html`, `operators.html`, `subscriptions.html`, `customers.html` - feature pages, each guarded by `guard.js`
+- `user-dashboard.html`, `admin-dashboard.html` - role-aware dashboards
+- `scripts/navbar.js` - shared navbar component, rendered into `<div id="site-header">` on every page (`<body data-page="...">` selects the active link and home vs. sub-page link targets)
+- `scripts/main.js` - landing page behaviour (auth UI, overlays, login/register)
+- `scripts/guard.js` - shared auth guard (`requireLogin`, `requireAdmin`, `wireStaticNav`) for sub-pages
+- `scripts/<page>.js` - per-page data wiring (plans, operators, subscriptions, customers, dashboards)
 
 ## Checklist
 

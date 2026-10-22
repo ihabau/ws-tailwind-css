@@ -31,6 +31,7 @@ function bootstrapUserDashboard() {
   const subscriptionsCount = document.getElementById("subscriptions-count");
   const plansCount = document.getElementById("plans-count");
   const operatorsCount = document.getElementById("operators-count");
+  const welcomeTitle = document.getElementById("welcome-title");
 
   async function loadSubscriptions() {
     try {
@@ -58,6 +59,16 @@ function bootstrapUserDashboard() {
     } catch {
       operatorsCount.textContent = "-";
     }
+  }
+
+  // Fill welcome name from the session (sub = email) or cached user.
+  try {
+    const session = getSession();
+    if (session && session.sub && welcomeTitle) {
+      welcomeTitle.textContent = `Welcome back, ${session.sub}`;
+    }
+  } catch {
+    // ignore
   }
 
   loadSubscriptions();

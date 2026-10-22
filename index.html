@@ -21,79 +21,8 @@
     focus     : focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500
 -->
 
-<body class="bg-slate-50 text-slate-600 antialiased">
-  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
-    <div class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
-      <a href="#"
-        class="rounded text-xl font-bold tracking-tight text-slate-900 transition hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-        Lexicon Telecom
-        <span id="nav-role" class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600"></span>
-      </a>
-
-      <nav id="mobile-menu"
-        class="hidden flex-col items-start gap-4 text-sm font-medium text-slate-600 md:flex md:flex-row md:items-center md:gap-6 sm:absolute sm:top-16 sm:right-0 sm:w-56 sm:rounded-2xl sm:border sm:border-slate-200 sm:bg-white sm:p-2 sm:shadow-xl">
-        <a href="#"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Home</a>
-        <a href="#plans"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Plans</a>
-        <a href="#subscriptions"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Subscriptions</a>
-        <a href="#operators"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Operators</a>
-        <a href="#contact"
-          class="rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Contact</a>
-        <a id="dashboard-link" href="user-dashboard.html"
-          class="hidden rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">Dashboard</a>
-        <a href="#login" data-nav-login
-          class="js-open-login rounded px-1 transition hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden">Login</a>
-      </nav>
-
-      <button id="menu-button"
-        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden">
-        MENU
-      </button>
-
-      <div id="nav-auth" class="relative">
-        <button type="button" id="login-menu-btn"
-          class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-          Login
-          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        <div id="login-menu"
-          class="hidden absolute right-0 z-50 mt-2 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
-          <a href="#login" id="signin-link"
-            class="block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
-            Sign in
-          </a>
-
-          <a href="#register"
-            class="js-open-register block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
-            Create account
-          </a>
-
-          <div class="my-2 border-t border-slate-200"></div>
-
-          <a href="/forgot-password"
-            class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-slate-100 hover:text-slate-900">
-            Forgot password?
-          </a>
-        </div>
-      </div>
-
-      <div id="nav-user" class="hidden flex items-center gap-3">
-        <span class="hidden text-sm text-slate-500 sm:inline">Signed in as</span>
-        <span id="nav-username" class="text-sm font-semibold text-slate-900"></span>
-        <button type="button" id="logout-btn"
-          class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-          Log out
-        </button>
-      </div>
-    </div>
-  </header>
+<body class="bg-slate-50 text-slate-600 antialiased" data-page="home">
+  <div id="site-header"></div>
 
   <!--
     LOGIN PAGE - overlays the rest of the page, sitting under the navbar.
@@ -597,6 +526,7 @@
 
   <script src="./node_modules/jquery/dist/jquery.js"></script>
   <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./scripts/navbar.js"></script>
   <script src="./scripts/main.js"></script>
 </body>
 
