@@ -47,13 +47,28 @@ Work through the list before you call the page done.
 
 ---
 
-## Weekly reflection
+## JavaScript Workshop Coverage
 
-### What you have learned this week
+This project demonstrates the core JavaScript concepts from the workshop:
 
-This week focused on **utility-first styling with Tailwind CSS**. Instead of writing custom CSS in separate files, I learned to compose small
-single-purpose utility classes (`px-4`, `bg-blue-500`, `rounded-lg`) directly in the markup, using fixed spacing and color scales to keep the design consistent. I also learned the mobile-first responsive approach with `sm:`/`md:`/`lg:` breakpoints, and when to reach for Flexbox versus Grid when laying out a page. Finally, I understood that the CDN is only for prototyping and that real production builds bundle Tailwind and strip unused CSS.
+- [x] **Dynamic DOM manipulation** - All pages render data dynamically using template literals and DOM updates (`plans.js`, `operators.js`, `customers.js`, `subscriptions.js`, dashboards)
+- [x] **Event handling** - Forms, buttons, search inputs with `click`, `submit`, `input`, `change` events
+- [x] **Array methods** - Heavy use of `map()`, `filter()`, `find()` for rendering and searching
+- [x] **API calls with axios** - GET/POST/PUT requests to REST API with authentication headers
+- [x] **localStorage** - Token persistence (`accessToken`) and session management
+- [x] **Template literals** - Dynamic HTML generation throughout scripts
+- [x] **Functions & modular code** - Separate script files per page/feature
+- [x] **Error handling** - Try/catch with user-friendly error messages
+- [x] **Form validation & submission** - Login, register, profile updates
+- [x] **Filtering & searching** - Real-time filtering on customers page (case-insensitive), search by different criteria
+- [x] **Authentication flow** - JWT token handling, role-based access control, guards
 
-### Key tasks worked on this week
+### Additional Features Implemented
+- [x] Role-based UI (admin/user dashboards, conditional rendering)
+- [x] Route guards preventing unauthorized access
+- [x] Modal overlays for login/register
+- [x] Loading states and empty states
+- [x] Responsive design with Tailwind CSS
+- [x] Profile management with ownership controls
 
-This week I read the workshop brief and the Tailwind CSS presentation, covering what utility-first CSS is, the install methods, and how a Tailwind button compares to a traditional CSS one. I practiced the core utility groups - colors and shades, spacing with direction modifiers, typography, and the Flexbox and Grid layout classes. I also set up the teaching environment with an `index.html` skeleton that has commented section goals and tip comments plus a local dev server. The main task has been building the landing page for lexicon-ws-subscription-platform - a styled navbar as the worked example, and plain HTML skeleton sections for the rest - with API calls that pull live plans and operators (GET) and log the user in (POST), which the checklist above tracks.
+*Note:* The original JS workshop focused on an e-commerce product catalog with cart functionality. Our telecom subscription platform covers equivalent JavaScript concepts in a different domain (API integration, authentication, role-based access). All core JS skills (DOM manipulation, events, arrays, async API calls, localStorage) are demonstrated.
